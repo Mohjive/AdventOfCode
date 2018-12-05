@@ -5,35 +5,37 @@
 
 using namespace std;
 
-int first(ifstream& infile) {
-    int i, sum = 0;
-    infile.clear();
-    infile.seekg(0, ios::beg);
-    while (infile >> i) {
+int first(vector<int> deltas) {
+    int sum = 0;
+
+    for (auto i: deltas) {
         sum += i;
     }
     return sum;
 }
 
-int second(ifstream& infile) {
-    int i, sum = 0;
+int second(vector<int> deltas) {
+    int sum = 0;
     bool inserted = false;
-    unordered_set<int> freq;
+    unordered_set<int> frequencies;
     while(true) {
-        infile.clear();
-        infile.seekg(0);
-        while (infile >> i) {
+        for (auto i: deltas) {
             sum += i;
-            tie(std::ignore, inserted) = freq.insert(sum);
+            tie(std::ignore, inserted) = frequencies.insert(sum);
             if (!inserted) return sum;
         }
     }
 }
 
 int main() {
+    int i;
+    vector<int> deltas;
     ifstream infile("input.txt");
-    cout << "first: " << first(infile) << endl;
-    cout << "second: " << second(infile) << endl;
+    while (infile >> i) {
+        deltas.push_back(i);
+    }
+    cout << "first: " << first(deltas) << endl;
+    cout << "second: " << second(deltas) << endl;
 
     return 0;
 }
