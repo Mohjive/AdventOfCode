@@ -37,13 +37,32 @@ int first(vector<string> idstrings) {
     return twoes*threes;
 }
 
+int second(vector<string> idstrings) {
+    int pos = 0;
+
+	for (vector<string>::iterator i = idstrings.begin(); i != idstrings.end(); ++i) {		
+		for (vector<string>::iterator j = i; j != idstrings.end(); ++j) {
+            auto ita = (*i).begin();
+            auto itb = (*j).begin();
+            for(; ita != (*i).end() || itb != (*j).end(); ++ita, ++itb) {
+                if (*ita != *itb) cout << *ita << " != " << *itb << endl;
+            }
+			
+		}
+	}
+	
+	return 0;
+}
+
 int main() {
     string str;
-    vector<string> idstrings;
-    ifstream infile("input.txt");
+    vector<string> idstrings = {"abcd", "abcf", "aacf"};
+    /*ifstream infile("input.txt");
     while (getline(infile, str)) {
         idstrings.push_back(str);
-    }
-    cout << "First: " << first(idstrings) << endl;
+    }*/
+    
+    //cout << "First: " << first(idstrings) << endl;
+    second(idstrings);
     return 0;
 }
