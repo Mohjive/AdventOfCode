@@ -37,32 +37,41 @@ int first(vector<string> idstrings) {
     return twoes*threes;
 }
 
-int second(vector<string> idstrings) {
+string second(vector<string> idstrings) {
     int pos = 0;
 
-	for (vector<string>::iterator i = idstrings.begin(); i != idstrings.end(); ++i) {		
-		for (vector<string>::iterator j = i; j != idstrings.end(); ++j) {
-            auto ita = (*i).begin();
-            auto itb = (*j).begin();
-            for(; ita != (*i).end() || itb != (*j).end(); ++ita, ++itb) {
-                if (*ita != *itb) cout << *ita << " != " << *itb << endl;
+	for (vector<string>::iterator outer = idstrings.begin(); outer != idstrings.end(); ++outer) {
+		for (vector<string>::iterator inner = outer + 1; inner != idstrings.end(); ++inner) {
+            int pos = -1;
+            bool match = true;
+            for(int i = 0; i < (*outer).length(); i++) {
+                if ( (*outer)[i] != (*inner)[i] ) {
+                    if (pos == -1) {
+                        pos = i;
+                    } else {
+                        match = false;
+                        break;
+                    }
+                }
+            }
+            if (match) {
+                return (*outer).erase(pos,1);
             }
 			
 		}
 	}
-	
-	return 0;
+	return {};
 }
 
 int main() {
     string str;
-    vector<string> idstrings = {"abcd", "abcf", "aacf"};
-    /*ifstream infile("input.txt");
+    vector<string> idstrings;
+    ifstream infile("input.txt");
     while (getline(infile, str)) {
         idstrings.push_back(str);
-    }*/
+    }
     
-    //cout << "First: " << first(idstrings) << endl;
-    second(idstrings);
+    cout << "First: " << first(idstrings) << endl;
+    cout << "Second: " << second(idstrings) << endl;
     return 0;
 }
