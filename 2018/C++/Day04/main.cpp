@@ -133,7 +133,6 @@ int main() {
     ActionList actions;
     set<datetime::Timestamp> timestamps;
 
-
     /* Format:
     [1518-11-01 00:00] Guard #10 begins shift
     [1518-11-01 00:05] falls asleep

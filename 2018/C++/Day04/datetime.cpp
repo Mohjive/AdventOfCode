@@ -1,6 +1,7 @@
 #include <iostream>
 #include <sstream>
 #include <iomanip>
+#include <algorithm>
 #include "datetime.h"
 
 using namespace std;
@@ -27,8 +28,7 @@ namespace datetime
         int year, month, day;
         is >> year >> s1 >> month >> s2 >> day;
         if ( s1 == s2 &&
-            (s1 == '-' || s1 == '/' || s1 == '\\' ||
-             s2 == '-' || s2 == '/' || s2 == '\\') )
+            (s1 == '-' || s1 == '/' || s1 == '\\' || s1 == '.') )
         {
             d.year = year;
             d.month = month;
@@ -40,10 +40,8 @@ namespace datetime
             stringstream ss(s);
             ss << year << s1 << month << s2 << day;
             s = ss.str();
-            for (auto &c: reverse(s))
-            {
-                is.putback(c);
-            }
+            for_each(s.rbegin(), s.rend(),
+                [&is](auto const &c) { is.putback(c); });
         }
 
         return is;
