@@ -3,67 +3,69 @@
 
 using namespace std;
 
-namespace fabric {
+namespace fabric
+{
 
-    struct Coordinate {
+    struct Coordinate
+    {
         Coordinate() {}
-        Coordinate(int _x, int _y) {
-            x = _x;
-            y = _y;
-        }
+        Coordinate(int _x, int _y): x(_x), y(_y) {};
         int x;
         int y;
     };
 
-    struct Area {
+    struct Area
+    {
         int width;
         int height;
     };
 
-    struct Claim {
+    struct Claim
+    {
         int id;
         Coordinate coord;
         Area size;
     };
 
-    struct Data {
-        Data(int _id, int _count) {
-            id = _id;
-            count = _count;
-        }
+    struct Data
+    {
+        Data(int _id, int _count): id(_id), count(_count){};
         int id;
         int count;
     };
 
     typedef unordered_map<fabric::Coordinate, fabric::Data> Fabric;
     typedef vector<fabric::Claim> Claims;
-    
-    std::ostream& operator << (ostream& os, const Coordinate& c) {
+
+    std::ostream& operator << (ostream& os, Coordinate const &c)
+    {
         return os << "x: " << c.x << " y: " << c.y;
     }
 
-    std::ostream& operator << (ostream& os, const Area& a) {
+    std::ostream& operator << (ostream& os, Area const &a)
+    {
         return os << "height: " << a.height << " width: " << a.width;
     }
 
-    std::ostream& operator << (ostream& os, const Claim& c) {
+    std::ostream& operator << (ostream &os, Claim const &c)
+    {
         return os << "id: " << c.id << " coord: { " << c.coord << " } size: { " << c.size << " }";
     }
 
-    bool operator == (const Coordinate& c1, const Coordinate& c2) {
+    bool operator == ( Coordinate const &c1, Coordinate const &c2)
+    {
         return (c1.x == c2.x && c1.y == c2.y);
     }
 }
 
-namespace std {
-        template<> struct hash<fabric::Coordinate>
+namespace std
+{
+    template<> struct hash<fabric::Coordinate>
     {
-        typedef fabric::Coordinate argument_type;
-        typedef std::size_t result_type;
-        result_type operator()(argument_type const& c) const noexcept
+        std::size_t operator()(fabric::Coordinate const &c) const noexcept
         {
-            result_type const h1 ( std::hash<int>{}(c.x) );
-            result_type const h2 ( std::hash<int>{}(c.y) );
+            std::size_t const h1 ( std::hash<int>{}(c.x) );
+            std::size_t const h2 ( std::hash<int>{}(c.y) );
             return h1 ^ (h2 << 1);
         }
     };
