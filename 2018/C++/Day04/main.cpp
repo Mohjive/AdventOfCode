@@ -109,6 +109,24 @@ int first(SleepData const &sleepdata)
     return guard_id * selected_minute;
 }
 
+int second (SleepData const &sleepdata)
+{
+    int best_minute = 0, max_minute_freq = 0, guard_id = 0;
+    for (auto const &guard: sleepdata)
+    {
+        for (auto const &minute: guard.second.minutemap)
+        {
+            if (minute.second > max_minute_freq)
+            {
+                best_minute = minute.first;
+                guard_id = guard.first;
+                max_minute_freq = minute.second;
+            }
+        }
+    }
+    return best_minute * guard_id;
+}
+
 int main() {
     string str;
     ifstream infile("input.txt");
@@ -130,6 +148,7 @@ int main() {
     }
     SleepData sleepdata = calculate_sleeptimes(actions);
     cout << "first: " << first(sleepdata) << endl;
+    cout << "second: " << second(sleepdata) << endl;
 
     return 0;
 }
