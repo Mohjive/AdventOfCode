@@ -1,8 +1,10 @@
 #include <iostream>
+#include <unordered_map>
 
 using namespace std;
 
 namespace fabric {
+
     struct Coordinate {
         Coordinate() {}
         Coordinate(int _x, int _y) {
@@ -24,6 +26,18 @@ namespace fabric {
         Area size;
     };
 
+    struct Data {
+        Data(int _id, int _count) {
+            id = _id;
+            count = _count;
+        }
+        int id;
+        int count;
+    };
+
+    typedef unordered_map<fabric::Coordinate, fabric::Data> Fabric;
+    typedef vector<fabric::Claim> Claims;
+    
     std::ostream& operator << (ostream& os, const Coordinate& c) {
         return os << "x: " << c.x << " y: " << c.y;
     }
