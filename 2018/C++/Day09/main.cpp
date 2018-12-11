@@ -37,11 +37,11 @@ MarbleCircle::iterator move_position(MarbleCircle &marble_circle, MarbleCircle::
     {
         while (steps > 0)
         {
-            current_position++;
             if (current_position == marble_circle.end())
             {
                 current_position = marble_circle.begin();
             }
+            current_position++;
             steps--;
         }
     }
@@ -49,11 +49,11 @@ MarbleCircle::iterator move_position(MarbleCircle &marble_circle, MarbleCircle::
     {
         while (steps < 0)
         {
-            current_position--;
             if (current_position == marble_circle.begin())
             {
                 current_position = marble_circle.end();
             }
+            current_position--;
             steps++;
         }
     }
@@ -84,7 +84,7 @@ uint64_t play_marble(int const num_players, int const marble_value)
         }
         // print_round(marble_circle, current_marble, current_player);
     }
-    int highscore = 0;
+    uint64_t highscore = 0;
     for ( auto const &p: players) {
         if (p > highscore)
         {
@@ -107,5 +107,7 @@ int main()
  */
     auto first_answer = play_marble(num_players, marble_value);
     cout << "first: " << first_answer << endl;
+    auto second_answer = play_marble(num_players, marble_value*100);
+    cout << "second: " << second_answer << endl;
     return 0;
 }
